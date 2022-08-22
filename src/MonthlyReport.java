@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MonthlyReport {
-    private MonthlyReport(String name) {
+    private MonthlyReport(int month) {
         this.items = new ArrayList<>();
-        this.name = name;
+        this.month = month;
     }
 
     public ArrayList<MonthlyReportItem> getItems() {
@@ -15,15 +15,15 @@ public class MonthlyReport {
     }
     private ArrayList<MonthlyReportItem> items;
 
-    public String getName() {
-        return name;
+    public int getMonth() {
+        return month;
     }
 
-    private String name;
+    private int month;
 
-    public static MonthlyReport parseCsv(File filename, String name)
+    public static MonthlyReport parseCsv(File filename, int month)
             throws IOException {
-        MonthlyReport res = new MonthlyReport(name);
+        MonthlyReport res = new MonthlyReport(month);
         try (BufferedReader br =
                      new BufferedReader(new FileReader(filename))) {
             String line;
@@ -53,7 +53,7 @@ public class MonthlyReport {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (MonthlyReportItem mri: items) {
-            sb.append(String.format("%20s%10s%10d%10d%10d\n",
+            sb.append(String.format("%40s%10s%10d%10d%10d\n",
                     mri.getItem_name(),
                     mri.isIs_expense(),
                     mri.getQuantity(),
@@ -87,7 +87,7 @@ public class MonthlyReport {
     }
 
     public void printReport() {
-        System.out.println(name);
+        System.out.println(month);
         MonthlyReportItem largestRevenue = getMax(false);
         System.out.printf("Самый прибыльный товар: %s",
                 largestRevenue.getItem_name());
@@ -100,5 +100,16 @@ public class MonthlyReport {
         System.out.printf(" Стоимость: %d",
                 largestExpense.value());
 
+    }
+
+    public int getAccountTotal(boolean is_expense) {
+        int res = 0;
+        for (MonthlyReportItem mri:
+             items) {
+            if (mri.isIs_expense() == is_expense) {
+                res += mri.value();
+            }
+        }
+        return res;
     }
 }
