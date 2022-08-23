@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class YearlyReport {
     public ArrayList<YearlyReportItem> getItems() {
@@ -66,5 +68,61 @@ public class YearlyReport {
                 return yri;
         }
         return null;
+    }
+
+    public Set<Integer> getMonths() {
+        Set<Integer> res = new HashSet<>();
+        for (YearlyReportItem yri: items)
+            res.add(yri.getMonth());
+
+        return res;
+    }
+    public void printReport() {
+        System.out.printf("Yearly Report (%d)\n",
+                this.year);
+
+        System.out.printf("%10s%15s\n",
+                "month", "income");
+        Set<Integer> months = this.getMonths();
+        for (Integer m: months
+             ) {
+            YearlyReportItem m_revenue =
+                getMonthAccount(m, false);
+            YearlyReportItem m_expense =
+                getMonthAccount(m, true);
+
+
+            if (m_revenue == null ||
+            m_expense == null) {
+                System.out.printf("incomplete month (%d)!\n",
+                        m);
+            } else {
+                int income = m_revenue.getAmount()
+                        - m_expense.getAmount();
+                System.out.printf("%10d%15d\n",
+                        m, income);
+            }
+        }
+
+        // average revenue / expense
+        int sr = 0, se = 0;
+        int nr = 0, ne = 0;
+
+        for (YearlyReportItem yri: items) {
+            if (yri.getIsExpense()) {
+                se += yri.getAmount();
+                ne += 1;
+            } else {
+                sr += yri.getAmount();
+                nr += 1;
+            }
+        }
+
+        double avg_revenue = (double) sr / nr;
+        double avg_expense = (double) se / ne;
+
+        System.out.printf("average revenue = %.2f\n", avg_revenue);
+        System.out.printf("average expense = %.2f\n", avg_expense);
+
     }
 }

@@ -26,8 +26,8 @@ public class Main {
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
         // testMonthlyReport();
-        // testYearlyReport();
-        testVerify();
+        testYearlyReport();
+        // testVerify();
     }
 
     private static void testMonthlyReport() {
@@ -52,11 +52,13 @@ public class Main {
         File f1=new File("resources\\y.2021.csv");
         System.out.println(f1.canRead());
 
-        YearlyReport mr;
+        YearlyReport yr;
         try {
-            mr = YearlyReport.parseCsv(f1, 2021);
-            System.out.println(mr);
-            // mr.printReport();
+            yr = YearlyReport.parseCsv(f1, 2021);
+            System.out.println(yr);
+            yr.printReport();
+
+
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
