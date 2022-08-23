@@ -99,7 +99,7 @@ public class MonthlyReport {
                 largestExpense.getItem_name());
         System.out.printf(" Стоимость: %d",
                 largestExpense.value());
-
+        System.out.println();
     }
 
     public int getAccountTotal(boolean is_expense) {
