@@ -14,12 +14,14 @@
 import java.io.*;
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         // Поехали!
-
+        // Menu();
+        File f1=new File("resources\\m.202101.csv");
         System.out.println("hello");
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
@@ -100,6 +102,37 @@ public class Main {
 
         Accounting.verify(mrs, yr);
 
+    }
+    public static void Menu(){
+        Scanner scanner = new Scanner(System.in);
+        int input = scanner.nextInt();
+        while(true){
+            System.out.println( "1-Считать все месячные отчёты\n" +
+                                "2-Считать годовой отчёт\n" +
+                                "3-Сверить отчёты\n" +
+                                "4-Вывести информацию о всех месячных отчётах\n" +
+                                "5-Вывести информацию о годовом отчёте\n"+
+                                "6-Выход");
+
+            if(input == 1){
+                // MonthlyReport.parseCsv(f1,1);
+            }
+            else if (input == 2) {
+
+            }
+            else if(input == 3){
+
+            }
+            else if(input == 4){
+
+            }
+            else if(input == 5){
+
+            }
+            else if(input == 6){
+                break;
+            }
+        }
     }
 }
 

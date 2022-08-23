@@ -7,8 +7,7 @@ public class Accounting {
         // System.out.println("verification started...");
         boolean ok = true;
 
-        for (MonthlyReport mr: mrs
-             ) {
+        for (MonthlyReport mr: mrs) {
             boolean res = verifyMonth(mr, yr);
             if (!res) {
                 ok = false;
